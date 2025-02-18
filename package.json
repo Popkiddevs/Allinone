@@ -1,0 +1,33 @@
+{
+  "name": "express-pair",
+  "version": "1.0.0",
+  "description": "WhatsApp Pairing Server using Baileys",
+  "main": "ethix.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ethix.js",
+    "dev": "nodemon ethix.js",  // Added dev script for hot reloading
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["whatsapp", "pairing", "baileys", "api", "express"],
+  "author": "Guru",
+  "license": "MIT",  // Added MIT license for open-source projects
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@types/node": "^18.0.6",
+    "@whiskeysockets/baileys": "^6.7.12",
+    "cfonts": "^3.2.0",
+    "chalk": "^5.3.0",
+    "cluster": "^0.7.7",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.2.6",
+    "pastebin-js": "^1.0.6",
+    "path": "^0.12.7",
+    "pino": "^8.15.1",
+    "prompt-sync": "^4.2.0",
+    "readline": "^1.3.0",
+    "yargs": "^17.6.0",
+    "nodemon": "^2.0.20"  // Added nodemon for automatic reload during development
+  }
+}
