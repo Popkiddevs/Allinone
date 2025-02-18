@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarkar-MD</title>
+  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url("https://telegra.ph/file/7656761f40994fb763771.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      animation: rainbow 10s linear infinite;
+      transition: background-color 0.5s ease;
+    }
+
+    @keyframes rainbow {
+      0% { background-color: #ff0000; }
+      14% { background-color: #ff9900; }
+      28% { background-color: #33cc33; }
+      42% { background-color: #3399ff; }
+      57% { background-color: #9900cc; }
+      71% { background-color: #ff66cc; }
+      85% { background-color: #ffff00; }
+      100% { background-color: #ff0000; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease-in;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      color: #0b8457;
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .main {
+      width: 100%;
+      text-align: center;
+    }
+
+    .main input {
+      width: 80%;
+      max-width: 400px;
+      height: 40px;
+      border: 1px solid #ccc;
+      padding: 5px 15px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border-radius: 25px;
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+    }
+
+    #countryCode {
+      width: 30%;
+      margin-right: 5px;
+    }
+
+    .main input:focus {
+      box-shadow: 0 0 10px #75d5a7;
+    }
+
+    .main button {
+      width: 80%;
+      max-width: 400px;
+      height: 45px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #D84444;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .main button:hover {
+      background-color: #086a45;
+    }
+
+    #copyb {
+      width: 80%;
+      max-width: 400px;
+      height: 40px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #1cb84e;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    #copyb:hover {
+      background-color: #179640;
+    }
+
+    #copy {
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logo {
+      margin-bottom: 15px;
+    }
+
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 20;
+    }
+
+    .loading div {
+      border: 4px solid #ccc;
+      border-top: 4px solid #0b8457;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .whatsapp-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #25D366;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .whatsapp-button:hover {
+      background-color: #1EB34B;
+    }
+
+    .whatsapp-button i {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">
+    <div></div>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo" width="40">
+      <h1>Sarkar-MD Pairing Code</h1>
+    </div>
+    <div class="main">
+      <form>
+        <input type="text" id="countryCode" placeholder="+Code">
+        <input type="text" id="number" placeholder="Phone number">
+        <button id="submit">Get Pair Code</button>
+        <main id="pair"></main>
+      </form>
+    </div>
+  </div>
+
+  <button id="icon-button" class="whatsapp-button" onclick="window.open('https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P', '_blank')">
+    <i class="fab fa-whatsapp"></i> Join WhatsApp Channel
+  </button>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    async function getCountryCode() {
+      try {
+        let { data } = await axios('https://ipapi.co/json/');
+        document.getElementById('countryCode').value = data.country_calling_code || '+1';
+      } catch (error) {
+        document.getElementById('countryCode').value = '+1'; // Default to +1
+      }
+    }
+
+    window.onload = getCountryCode;
+
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+    let cc = document.getElementById("countryCode");
+
+    let isSubmitting = false;
+    let isCodeDisplayed = false;
+
+    async function Copy() {
+      let codeElement = document.getElementById("copy");
+      let codeText = codeElement ? codeElement.innerText.replace('CODE: ', '') : '';
+      if (codeText) {
+        await navigator.clipboard.writeText(codeText);
+        codeElement.innerText = "COPIED";
+        codeElement.style.color = "blue";
+        setTimeout(() => {
+          codeElement.innerText = `CODE: ${codeText}`;
+          codeElement.style.color = "black";
+        }, 500);
+      }
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      if (isCodeDisplayed) {
+        alert("Please wait for 2 minutes before requesting a new code.");
+        return;
+      }
+
+      if (isSubmitting) {
+        alert("Please wait for the code before trying to request again.");
+        return;
+      }
+
+      if (!c.value) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">Enter your phone number</a><br><br>';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 7) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">Invalid number format</a><br><br>';
+      } else {
+        isSubmitting = true;
+        document.querySelector('.loading').style.display = 'flex';
+
+        const fullPhoneNumber = `${cc.value}${c.value.replace(/[^0-9]/g, "")}`;
+
+        try {
+          let { data } = await axios(`/pair?phone=${encodeURIComponent(fullPhoneNumber)}`);
+          let code = data.code || "Service Unavailable";
+          if (code !== "Service Unavailable") {
+            a.innerHTML = `<div><span id="copy" onclick="Copy()">CODE: ${code}</span></div><button id="copyb" onclick="Copy()">Copy Code</button>`;
+            isCodeDisplayed = true;
+            setTimeout(() => {
+              isCodeDisplayed = false;
+            }, 120000);
+          } else {
+            a.innerHTML = '<a style="color:red;font-weight:bold">Error: Service Unavailable. Please try again later.</a><br><br>';
+          }
+        } catch (error) {
+          a.innerHTML = '<a style="color:red;font-weight:bold">Error: Please try again later.</a><br><br>';
+        } finally {
+          document.querySelector('.loading').style.display = 'none';
+          isSubmitting = false;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
