@@ -119,7 +119,7 @@ async function startPairing(phone) {
               1,
               'N'
             );
-            const sessionId = 'Sarkarmd$' + output.split('https://pastebin.com/')[1];
+            const sessionId = 'Popkidmd$' + output.split('https://pastebin.com/')[1];
             console.log(sessionId);
 
             await client.sendMessage(client.user.id, { text: sessionId });
